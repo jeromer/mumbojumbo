@@ -38,7 +38,7 @@ problem by obfuscating the string so it is no longer searchable with
 
 You can install mumbojumbo by running:
 
-    go install github.com/jeromer/mumbojumbo
+    go get github.com/jeromer/mumbojumbo/...
 
 ## Usage
 
