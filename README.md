@@ -9,6 +9,7 @@ searchable in the go binary.
 
 For example take the following code (`x.go`):
 
+```go
     package main
 
     import (
@@ -22,8 +23,9 @@ For example take the following code (`x.go`):
     func main() {
         fmt.Println(C)
     }
+```
 
-Now run `go build ./x.go` to build it and the run `strings ./x | grep hello`. 
+Now run `go build ./x.go` to build it and the run `strings ./x | grep hello`.
 
 Surprise ! "hello" is visible to anyone who would get the go binary.
 
