@@ -55,7 +55,7 @@ For example, imagine I want to obfuscate the string `some secret` in pkg
     mumbojumbo -s="some secret" -p=foo | goimports > foo.go
 
 No import `foo.go` in your project and call `fmt.Println(foo.Get())` you should
-see "some secret" :simple_smile:
+see "some secret"
 
 Run `mumbojumbo --help` to get help
 
