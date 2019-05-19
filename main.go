@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 	"text/template"
 	"time"
 	"unsafe"
@@ -37,7 +38,7 @@ func Get() string {
 
 {{ .Obfuscated }}
 
-	return string(str)
+	return string(buff)
 }
 `
 )
@@ -98,29 +99,39 @@ const (
 )
 
 func obfuscate(txt string) string {
-	b := []byte(txt)
+	lines := []string{
+		fmt.Sprintf(
+			"var buff = make([]byte, %d)\n",
+			len(txt),
+		),
+	}
 
-	tmp := "var str []byte\n"
-
-	for _, item := range b {
-		tmp = fmt.Sprintf(
-			"%s\nstr = append(str, %s)",
-			tmp, getNumber(item),
+	for i, item := range []byte(txt) {
+		lines = append(
+			lines,
+			fmt.Sprintf(
+				"buff[%d] = %s",
+				i, getNumber(item),
+			),
 		)
 	}
 
-	return tmp
+	return strings.Join(lines, "\n")
 }
 
 func getNumber(n byte) (buf string) {
 	var arr []byte
+	var x uint8
 
 	for n > EAX {
+		x = 0
+
 		if n%2 == EAX {
-			arr = append(arr, EAX)
-		} else {
-			arr = append(arr, 0)
+			x = EAX
 		}
+
+		arr = append(arr, x)
+
 		n = n >> EAX
 	}
 
@@ -136,15 +147,15 @@ func getNumber(n byte) (buf string) {
 		)
 
 		if arr[i] == EAX {
+			op := "(%s|%s)"
+
 			if rand.Intn(2) == 0 {
-				buf = fmt.Sprintf(
-					"(%s^%s)", buf, ONE,
-				)
-			} else {
-				buf = fmt.Sprintf(
-					"(%s|%s)", buf, ONE,
-				)
+				op = "(%s^%s)"
 			}
+
+			buf = fmt.Sprintf(
+				op, buf, ONE,
+			)
 		}
 	}
 
