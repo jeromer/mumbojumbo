@@ -35,10 +35,7 @@ const (
 )
 
 func Get() string {
-
 {{ .Obfuscated }}
-
-	return string(buff)
 }
 `
 )
@@ -99,24 +96,18 @@ const (
 )
 
 func obfuscate(txt string) string {
-	lines := []string{
-		fmt.Sprintf(
-			"var buff = make([]byte, %d)\n",
-			len(txt),
-		),
-	}
+	lines := []string{}
 
-	for i, item := range []byte(txt) {
+	for _, item := range []byte(txt) {
 		lines = append(
-			lines,
-			fmt.Sprintf(
-				"buff[%d] = %s",
-				i, getNumber(item),
-			),
+			lines, getNumber(item),
 		)
 	}
 
-	return strings.Join(lines, "\n")
+	return fmt.Sprintf(
+		"return string(\n[]byte{\n%s,\n},\n)",
+		strings.Join(lines, ",\n"),
+	)
 }
 
 func getNumber(n byte) (buf string) {

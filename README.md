@@ -70,23 +70,23 @@ const (
 )
 
 func Get() string {
-
-	var buff = make([]byte, 11)
-
-	buff[0] = ((((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX<<EAX|EAX)<<EAX ^ EAX)
-	buff[1] = (((((EAX<<EAX|EAX)<<EAX<<EAX^EAX)<<EAX|EAX)<<EAX^EAX)<<EAX ^ EAX)
-	buff[2] = ((((EAX<<EAX|EAX)<<EAX<<EAX^EAX)<<EAX|EAX)<<EAX<<EAX ^ EAX)
-	buff[3] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX<<EAX | EAX)
-	buff[4] = EAX << EAX << EAX << EAX << EAX << EAX
-	buff[5] = ((((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX<<EAX|EAX)<<EAX ^ EAX)
-	buff[6] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX<<EAX | EAX)
-	buff[7] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX<<EAX^EAX)<<EAX | EAX)
-	buff[8] = (((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX<<EAX | EAX) << EAX
-	buff[9] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX<<EAX | EAX)
-	buff[10] = (((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX | EAX) << EAX << EAX
-
-	return string(buff)
+	return string(
+		[]byte{
+			((((EAX<<EAX|EAX)<<EAX|EAX)<<EAX<<EAX<<EAX|EAX)<<EAX ^ EAX),
+			(((((EAX<<EAX|EAX)<<EAX<<EAX|EAX)<<EAX|EAX)<<EAX^EAX)<<EAX | EAX),
+			((((EAX<<EAX|EAX)<<EAX<<EAX|EAX)<<EAX|EAX)<<EAX<<EAX ^ EAX),
+			(((EAX<<EAX|EAX)<<EAX<<EAX<<EAX|EAX)<<EAX<<EAX | EAX),
+			EAX << EAX << EAX << EAX << EAX << EAX,
+			((((EAX<<EAX|EAX)<<EAX|EAX)<<EAX<<EAX<<EAX|EAX)<<EAX ^ EAX),
+			(((EAX<<EAX|EAX)<<EAX<<EAX<<EAX|EAX)<<EAX<<EAX | EAX),
+			(((EAX<<EAX|EAX)<<EAX<<EAX<<EAX<<EAX|EAX)<<EAX | EAX),
+			(((EAX<<EAX|EAX)<<EAX|EAX)<<EAX<<EAX<<EAX | EAX) << EAX,
+			(((EAX<<EAX|EAX)<<EAX<<EAX<<EAX|EAX)<<EAX<<EAX | EAX),
+			(((EAX<<EAX|EAX)<<EAX|EAX)<<EAX<<EAX | EAX) << EAX << EAX,
+		},
+	)
 }
+
 ```
 
 Now import `foo.go` in your project and call `fmt.Println(foo.Get())` you should
