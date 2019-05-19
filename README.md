@@ -27,7 +27,7 @@ For example take the following code (`x.go`):
 
 Now run `go build ./x.go` to build it and the run `strings ./x | grep hello`.
 
-Surprise ! "hello" is visible to anyone who has access the go binary.
+Surprise ! `hello` is visible to anyone who has access the go binary.
 
 [mumbojumbo](https://github.com/jeromer/mumbojumbo) tries to mitigate this
 problem by obfuscating the string so it is no longer searchable with
@@ -71,21 +71,21 @@ const (
 
 func Get() string {
 
-	var str []byte
+	var buff = make([]byte, 11)
 
-	str = append(str, ((((EAX<<EAX^EAX)<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX | EAX))
-	str = append(str, (((((EAX<<EAX^EAX)<<EAX<<EAX|EAX)<<EAX^EAX)<<EAX|EAX)<<EAX ^ EAX))
-	str = append(str, ((((EAX<<EAX^EAX)<<EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX | EAX))
-	str = append(str, (((EAX<<EAX^EAX)<<EAX<<EAX<<EAX|EAX)<<EAX<<EAX ^ EAX))
-	str = append(str, EAX<<EAX<<EAX<<EAX<<EAX<<EAX)
-	str = append(str, ((((EAX<<EAX^EAX)<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX | EAX))
-	str = append(str, (((EAX<<EAX^EAX)<<EAX<<EAX<<EAX|EAX)<<EAX<<EAX ^ EAX))
-	str = append(str, (((EAX<<EAX^EAX)<<EAX<<EAX<<EAX<<EAX|EAX)<<EAX ^ EAX))
-	str = append(str, (((EAX<<EAX^EAX)<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX)
-	str = append(str, (((EAX<<EAX^EAX)<<EAX<<EAX<<EAX|EAX)<<EAX<<EAX ^ EAX))
-	str = append(str, (((EAX<<EAX^EAX)<<EAX|EAX)<<EAX<<EAX^EAX)<<EAX<<EAX)
+	buff[0] = ((((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX<<EAX|EAX)<<EAX ^ EAX)
+	buff[1] = (((((EAX<<EAX|EAX)<<EAX<<EAX^EAX)<<EAX|EAX)<<EAX^EAX)<<EAX ^ EAX)
+	buff[2] = ((((EAX<<EAX|EAX)<<EAX<<EAX^EAX)<<EAX|EAX)<<EAX<<EAX ^ EAX)
+	buff[3] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX<<EAX | EAX)
+	buff[4] = EAX << EAX << EAX << EAX << EAX << EAX
+	buff[5] = ((((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX<<EAX|EAX)<<EAX ^ EAX)
+	buff[6] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX<<EAX | EAX)
+	buff[7] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX<<EAX^EAX)<<EAX | EAX)
+	buff[8] = (((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX<<EAX | EAX) << EAX
+	buff[9] = (((EAX<<EAX|EAX)<<EAX<<EAX<<EAX^EAX)<<EAX<<EAX | EAX)
+	buff[10] = (((EAX<<EAX|EAX)<<EAX^EAX)<<EAX<<EAX | EAX) << EAX << EAX
 
-	return string(str)
+	return string(buff)
 }
 ```
 
