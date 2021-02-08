@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	VERSION = "1.0"
+	VERSION = "1.1"
 )
 
 var (
@@ -30,9 +30,9 @@ import (
 	"unsafe"
 )
 
-const (
-	EAX = uint8(unsafe.Sizeof(true))
-)
+func eax() uint8{
+	return uint8(unsafe.Sizeof(true))
+}
 
 func Get() string {
 {{ .Obfuscated }}
@@ -92,7 +92,7 @@ func generateGoCode(data tplData) string {
 
 const (
 	EAX = uint8(unsafe.Sizeof(true))
-	ONE = "EAX"
+	ONE = "eax()"
 )
 
 func obfuscate(txt string) string {
