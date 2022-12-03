@@ -39,6 +39,7 @@ problem by obfuscating the string so it is no longer searchable with
 You can install mumbojumbo by running:
 
     go get github.com/jeromer/mumbojumbo/...
+	go install github.com/jeromer/mumbojumbo
 
 ## Usage
 
@@ -93,6 +94,10 @@ Now import `foo.go` in your project and call `fmt.Println(foo.Get())` you should
 see "some secret"
 
 Run `mumbojumbo --help` to get help
+
+You can also use a text file as input:
+
+    mumbojumbo -sf=/path/to/file -p=foo | goimports > foo.go
 
 ## License
 
